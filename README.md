@@ -63,9 +63,13 @@ Breadcrumbs::for('secret.page', function ($trail) {
 });
 ```
 
-### Generating the route
+### Rendering the breadcrumbs
 
-In your view file, you simply need to place `{{ Breadcrumbs::render() }}` wherever you want your breadcrumbs to appear. It's that easy. If there are no breadcrumbs for the current route, then nothing will be returned.
+In your view file, you simply need to call the `render()` method wherever you want your breadcrumbs to appear. It's that easy. If there are no breadcrumbs for the current route, then nothing will be returned.
+
+```php
+{{ Breadcrumbs::render() }}
+```
 
 You don't need to escape the content of the breadcrumbs, it's already wrapped in an instance of `Illuminate\Support\HtmlString` so Laravel knows just how to use it.
 
