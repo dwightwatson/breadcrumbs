@@ -1,6 +1,10 @@
 Breadcrumbs for Laravel
 =======================
 
+[![Build Status](https://travis-ci.org/dwightwatson/breadcrumbs.svg?branch=master)](https://travis-ci.org/dwightwatson/breadcrumbs)
+[![Total Downloads](https://poser.pugx.org/watson/breadcrumbs/downloads.svg)](https://packagist.org/packages/watson/breadcrumbs)
+[![License](https://poser.pugx.org/watson/breadcrumbs/license.svg)](https://packagist.org/packages/watson/breadcrumbs)
+
 Make breadcrumbs for Laravel great again.
 
 ## Installation
