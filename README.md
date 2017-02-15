@@ -12,7 +12,7 @@ Make breadcrumbs for Laravel great again.
 Require the package through Composer as per usual.
 
 ```sh
-$ composer require watson\breadcrumbs
+$ composer require watson/breadcrumbs
 ```
 
 Then add the service provider and facade in `config/app.php` as you would normally.
