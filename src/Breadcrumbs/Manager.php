@@ -27,7 +27,7 @@ class Manager
      * @param  \Closure  $definition
      * @return void
      */
-    public function for(string $route, Closure $definition): void
+    public function for(string $route, Closure $definition)
     {
         $this->generator->register($route, $definition);
     }
@@ -37,7 +37,7 @@ class Manager
      *
      * @return \Illuminate\Support\HtmlString
      */
-    public function render(): ?HtmlString
+    public function render()
     {
         if ($breadcrumbs = $this->generator->generate()) {
             return $this->renderer->render(config('breadcrumbs.view'), $breadcrumbs);

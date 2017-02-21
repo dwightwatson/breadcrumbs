@@ -29,7 +29,7 @@ class Route
      *
      * @return string
      */
-    public function name(): ?string
+    public function name()
     {
         if ($name = $this->route->getName()) {
             return $name;
