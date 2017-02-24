@@ -34,12 +34,6 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function boot()
     {
-        if ($this->app->runningInConsole()) {
-            // Can't generate breadcrumbs in the console as there is no route
-            // from which we can build the trail from.
-            return;
-        }
-
         $this->publishes([
             __DIR__.'/../config/breadcrumbs.php' => config_path('breadcrumbs.php'),
         ], 'config');
