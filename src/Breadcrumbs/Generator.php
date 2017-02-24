@@ -104,11 +104,11 @@ class Generator
      * @return void
      * @throws \Watson\Breadcrumbs\DefinitionNotFoundException
      */
-    protected function call(string $name, array ...$parameters): void
+    protected function call(string $name, array $parameters): void
     {
         $definition = $this->registrar->get($name);
 
-        $parameters = array_prepend($parameters, $this);
+        $parameters = array_prepend(array_values($parameters), $this);
 
         call_user_func_array($definition, $parameters);
     }
