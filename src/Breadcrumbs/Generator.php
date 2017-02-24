@@ -50,7 +50,7 @@ class Generator
      * @return void
      * @throws \Watson\Breadcrumbs\Exceptions\DefinitionAlreadyExists
      */
-    public function register(string $name, Closure $definition): void
+    public function register(string $name, Closure $definition)
     {
         $this->registrar->set($name, $definition);
     }
@@ -62,7 +62,7 @@ class Generator
      */
     public function generate(): Collection
     {
-        if ($this->registrar->has($this->route->name())) {
+        if ($this->route->present() && $this->registrar->has($this->route->name())) {
             $this->call(
                 $this->route->name(),
                 $this->route->parameters()
@@ -79,7 +79,7 @@ class Generator
      * @param  array  $parameters
      * @return void
      */
-    public function parent(string $name, array ...$parameters): void
+    public function parent(string $name, array ...$parameters)
     {
         $this->call($name, array_slice($parameters, 1));
     }
@@ -91,7 +91,7 @@ class Generator
      * @param  string  $url
      * @return void
      */
-    public function add(string $title, string $url): void
+    public function add(string $title, string $url)
     {
         $this->breadcrumbs->push(new Breadcrumb($title, $url));
     }
@@ -104,7 +104,7 @@ class Generator
      * @return void
      * @throws \Watson\Breadcrumbs\DefinitionNotFoundException
      */
-    protected function call(string $name, array $parameters): void
+    protected function call(string $name, array $parameters)
     {
         $definition = $this->registrar->get($name);
 

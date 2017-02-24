@@ -6,6 +6,7 @@ use Mockery;
 use Watson\Breadcrumbs\Route;
 use PHPUnit\Framework\TestCase;
 use Illuminate\Routing\Route as BaseRoute;
+use Illuminate\Contracts\Routing\Registrar;
 
 class RouteTest extends TestCase
 {
@@ -15,7 +16,11 @@ class RouteTest extends TestCase
     {
         $this->baseRoute = Mockery::mock(BaseRoute::class)->shouldDeferMissing();
 
-        $this->route = new Route($this->baseRoute);
+        $this->registrar = Mockery::mock(Registrar::class)->shouldDeferMissing();
+
+        $this->registrar->shouldReceive('current')->andReturn($this->baseRoute);
+
+        $this->route = new Route($this->registrar);
     }
 
     /** @test */

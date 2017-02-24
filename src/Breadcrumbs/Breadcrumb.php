@@ -46,7 +46,7 @@ class Breadcrumb
      *
      * @return string
      */
-    public function url(): ?string
+    public function url()
     {
         return $this->url;
     }

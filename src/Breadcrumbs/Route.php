@@ -2,7 +2,7 @@
 
 namespace Watson\Breadcrumbs;
 
-use Illuminate\Routing\Route as BaseRoute;
+use Illuminate\Contracts\Routing\Registrar;
 
 class Route
 {
@@ -16,12 +16,22 @@ class Route
     /**
     * Construct the route instance.
     *
-    * @param  \Illuminate\Routing\Route
+    * @param  \Illuminate\Contracts\Routing\Registrar  $registrar
     * @return void
     */
-    public function __construct(BaseRoute $route)
+    public function __construct(Registrar $registrar)
     {
-        $this->route = $route;
+        $this->route = $registrar->current();
+    }
+
+    /**
+     * Get whether a current route is present.
+     *
+     * @return bool
+     */
+    public function present(): bool
+    {
+        return ! is_null($this->route);
     }
 
     /**
@@ -29,7 +39,7 @@ class Route
      *
      * @return string
      */
-    public function name(): ?string
+    public function name()
     {
         if ($name = $this->route->getName()) {
             return $name;
