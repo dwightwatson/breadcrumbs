@@ -19,7 +19,7 @@ Then add the service provider and facade in `config/app.php` as you would normal
 
 ```php
 'providers' => [
-    Watson\Breadcrumbs\BreadcrumbServiceProvider::class
+    Watson\Breadcrumbs\ServiceProvider::class
 ];
 ```
 
