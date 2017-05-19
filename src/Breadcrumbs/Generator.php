@@ -76,12 +76,12 @@ class Generator
      * Call a parent route with the given parameters.
      *
      * @param  string  $name
-     * @param  array  $parameters
+     * @param  mixed  $parameters
      * @return void
      */
-    public function parent(string $name, array ...$parameters)
+    public function parent(string $name, ...$parameters)
     {
-        $this->call($name, array_slice($parameters, 1));
+        $this->call($name, $parameters);
     }
 
     /**
