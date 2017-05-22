@@ -52,6 +52,11 @@ Breadcrumbs::for('admin.users.edit', function ($trail, User $user) {
     $trail->parent('admin.users.show', $user);
     $trail->add('Edit', route('admin.users.edit', $user));
 });
+
+Breadcrumbs::for('admin.users.edit', function ($trail, User $user, Role $role) {
+    $trail->parent('admin.users.show', $user, $role);
+    $trail->add('Edit', route('admin.users.edit', [$user, $role]));
+});
 ```
 
 Note that you can call `parent()` from within a breadcrumb definition which lets you build up the breadcrumb tree. Pass any parameters you need further up through the second parameter.
