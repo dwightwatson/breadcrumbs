@@ -53,9 +53,14 @@ Breadcrumbs::for('admin.users.edit', function ($trail, User $user) {
     $trail->add('Edit', route('admin.users.edit', $user));
 });
 
-Breadcrumbs::for('admin.users.edit', function ($trail, User $user, Role $role) {
-    $trail->parent('admin.users.show', $user, $role);
-    $trail->add('Edit', route('admin.users.edit', [$user, $role]));
+Breadcrumbs::for('admin.users.roles.index', function ($trail, User $user) {
+    $trail->parent('admin.users.show', $user);
+    $trail->add('Roles', route('admin.users.roles.index', $user));
+});
+
+Breadcrumbs::for('admin.users.roles.show', function ($trail, User $user, Role $role) {
+    $trail->parent('admin.users.roles.index', $user, $role);
+    $trail->add('Edit', route('admin.users.roles.show', [$user, $role]));
 });
 ```
 
