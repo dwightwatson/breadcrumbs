@@ -101,13 +101,13 @@ require 'breadcrumbs.admin.php';
 The package ships with a Bootstrap 3 compatible view which you can publish and customise as you need, or override completely with your own view. Simply run the following command to publish the view.
 
 ```sh
-$ php artisan vendor:publish --provider=Watson\Breadcrumbs\ServiceProvider --tag=views
+$ php artisan vendor:publish --provider="Watson\Breadcrumbs\ServiceProvider" --tag=views
 ```
 
 This will publish the default `bootstrap3` view to your `resources/views/vendor/breadcrumbs` directory from which you can edit the file to your heart's content. If you want to use your own view instead, run the following command to publish the config file.
 
 ```sh
-$ php artisan vendor:publish --provider=Watson\Breadcrumbs\ServiceProvider --tag=config
+$ php artisan vendor:publish --provider="Watson\Breadcrumbs\ServiceProvider" --tag=config
 ```
 
 This will publish `config/breadcrumbs.php` which provides you the option to set your own view file for your breadcrumbs.
