@@ -5,7 +5,7 @@ Breadcrumbs for Laravel
 [![Total Downloads](https://poser.pugx.org/watson/breadcrumbs/downloads.svg)](https://packagist.org/packages/watson/breadcrumbs)
 [![License](https://poser.pugx.org/watson/breadcrumbs/license.svg)](https://packagist.org/packages/watson/breadcrumbs)
 
-Make breadcrumbs for Laravel great again.
+Breadcrumbs is a simple breadcrumb generator for Laravel that tries to hook into the magic to make it easy to get up and running.
 
 ## Installation
 

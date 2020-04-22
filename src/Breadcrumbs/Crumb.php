@@ -2,24 +2,24 @@
 
 namespace Watson\Breadcrumbs;
 
-class Breadcrumb
+class Crumb
 {
     /**
-     * The breadcrumb title.
+     * The crumb title.
      *
      * @var string
      */
     protected $title;
 
     /**
-     * The breacrumb URL.
+     * The crumb URL.
      *
      * @var string
      */
     protected $url;
 
     /**
-     * Construct the breadcrumb instance.
+     * Construct the crumb instance.
      *
      * @param  string  $title
      * @param  string  $url
@@ -32,7 +32,7 @@ class Breadcrumb
     }
 
     /**
-     * Get the breadcrumb title.
+     * Get the crumb title.
      *
      * @return string
      */
@@ -42,7 +42,7 @@ class Breadcrumb
     }
 
     /**
-     * Get the breadcrumb URL.
+     * Get the crumb URL.
      *
      * @return string
      */

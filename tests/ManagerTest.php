@@ -2,11 +2,13 @@
 
 namespace Watson\Breadcrumbs\Tests;
 
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Support\HtmlString;
+use Illuminate\View\Factory;
 use Mockery;
-use Watson\Breadcrumbs\Route;
-use Watson\Breadcrumbs\Manager;
-use Watson\Breadcrumbs\Renderer;
 use Watson\Breadcrumbs\Generator;
+use Watson\Breadcrumbs\Manager;
+use Watson\Breadcrumbs\Route;
 
 class ManagerTest extends TestCase
 {
@@ -16,13 +18,11 @@ class ManagerTest extends TestCase
     {
         parent::setUp();
 
-        $this->renderer = Mockery::mock(Renderer::class);
+        $this->view = Mockery::mock(Factory::class);
+        $this->config = Mockery::mock(Repository::class);
         $this->generator = Mockery::mock(Generator::class);
 
-        $this->breadcrumbs = new Manager(
-            $this->renderer,
-            $this->generator
-        );
+        $this->breadcrumbs = new Manager($this->view, $this->config, $this->generator);
     }
 
     /** @test */
@@ -37,5 +37,28 @@ class ManagerTest extends TestCase
             ->once();
 
         $this->breadcrumbs->for('foo', $closure);
+    }
+
+    /** @test */
+    function it_renders_the_correct_view_with_breadcrumbs()
+    {
+        $this->generator->shouldReceive('generate')
+            ->once()
+            ->andReturn(collect([1, 2, 3]));
+
+        $this->config->shouldReceive('get')
+            ->with('breadcrumbs.view')
+            ->once()
+            ->andReturn('index.html');
+
+        $this->view->shouldReceive('make')
+            ->with('index.html', ['breadcrumbs' => collect([1, 2, 3])])
+            ->once()
+            ->andReturn(new HtmlString('foo'));
+
+        $result = $this->breadcrumbs->render();
+
+        $this->assertEquals('foo', $result->toHtml());
+        $this->assertInstanceOf(HtmlString::class, $result);
     }
 }

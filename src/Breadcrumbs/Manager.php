@@ -3,20 +3,46 @@
 namespace Watson\Breadcrumbs;
 
 use Closure;
-use Illuminate\Support\HtmlString;
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Support\Arr;
 
 class Manager
 {
     /**
+     * The view factory.
+     *
+     * @var \Illuminate\Contracts\View\Factory
+     */
+    protected $view;
+
+    /**
+     * The config repository.
+     *
+     * @var \Illuminate\Contracts\Config\Repository
+     */
+    protected $config;
+
+    /**
+     * The breadcrumb generator.
+     *
+     * @var \Watson\Breadcrumbs\Generator
+     */
+    protected $generator;
+
+    /**
      * Create the instance of the manager.
      *
-     * @param  \Watson\Breadcrumbs\Renderer  $renderer
+     * @param  \Illuminate\Contracts\View\Factory  $view
+     * @param  \Illuminate\Contracts\Config\Repository  $config
      * @param  \Watson\Breadcrumbs\Generator  $generator
      * @return void
      */
-    public function __construct(Renderer $renderer, Generator $generator)
+    public function __construct(Factory $view, Repository $config, Generator $generator)
     {
-        $this->renderer = $renderer;
+        $this->view = $view;
+        $this->config = $config;
         $this->generator = $generator;
     }
 
@@ -33,14 +59,17 @@ class Manager
     }
 
     /**
-     * Render the breadcrumbs as an HTML string.
+     * Render the breadcrumbs as an HTML string
      *
-     * @return \Illuminate\Support\HtmlString
+     * @param  array  $parameters
+     * @return  \Illuminate\Contracts\Support\Htmlable
      */
-    public function render()
+    public function render($parameters = null): ?Htmlable
     {
-        if ($breadcrumbs = $this->generator->generate()) {
-            return $this->renderer->render(config('breadcrumbs.view'), $breadcrumbs);
+        $parameters = Arr::wrap($parameters);
+
+        if ($breadcrumbs = $this->generator->generate($parameters)) {
+            return $this->view->make($this->config->get('breadcrumbs.view'), compact('breadcrumbs'));
         }
     }
 }

@@ -7,10 +7,8 @@ return [
     | View file
     |--------------------------------------------------------------------------
     |
-    | Here you may specify the view that will be used to render the breadcrumbs.
-    | By default the package ships with a Bootstrap 3 compatible view, but you
-    | can publish and adjust it in your own application, or change it to use
-    | your own view instead.
+    | Here you may specify the view to use for rendering the breadrrumbs.
+    | By default we use a Bootstrap 4 view, but also support Bootstrap 3.
     |
     */
 

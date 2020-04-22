@@ -3,21 +3,23 @@
 namespace Watson\Breadcrumbs;
 
 use Closure;
+use Illuminate\Contracts\Routing\Registrar as Router;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
 class Generator
 {
     /**
-     * The current route.
+     * The router.
      *
-     * @var \Watson\Breadcrumbs\Route
+     * @var \Illuminate\Contracts\Routing\Registrar
      */
-    protected $route;
+    protected $router;
 
     /**
      * The breadcrumb registrar.
      *
-     * @var \Watson\Breadcrumbs\Route
+     * @var \Watson\Breadcrumbs\Registrar
      */
     protected $registrar;
 
@@ -31,13 +33,13 @@ class Generator
     /**
      * Create a new instance of the generator.
      *
-     * @param  \Watson\Breadcrumsb\Route  $route
+     * @param  \Watson\Breadcrumbs\Route  $route
      * @param  \Watson\Breadcrumbs\Registrar  $registrar
      * @return void
      */
-    public function __construct(Route $route, Registrar $registrar)
+    public function __construct(Router $router, Registrar $registrar)
     {
-        $this->route = $route;
+        $this->router = $router;
         $this->registrar = $registrar;
         $this->breadcrumbs = new Collection;
     }
@@ -60,13 +62,14 @@ class Generator
      *
      * @return \Illuminate\Support\Collection
      */
-    public function generate(): Collection
+    public function generate(array $parameters = null): Collection
     {
-        if ($this->route->present() && $this->registrar->has($this->route->name())) {
-            $this->call(
-                $this->route->name(),
-                $this->route->parameters()
-            );
+        $route = $this->router->current();
+
+        $parameters = isset($parameters) ? Arr::wrap($parameters) : $route->parameters;
+
+        if ($route && $this->registrar->has($route->getName())) {
+            $this->call($route->getName(), $parameters);
         }
 
         return $this->breadcrumbs;
@@ -93,7 +96,7 @@ class Generator
      */
     public function add(string $title, string $url)
     {
-        $this->breadcrumbs->push(new Breadcrumb($title, $url));
+        $this->breadcrumbs->push(new Crumb($title, $url));
     }
 
     /**
@@ -108,7 +111,7 @@ class Generator
     {
         $definition = $this->registrar->get($name);
 
-        $parameters = array_prepend(array_values($parameters), $this);
+        $parameters = Arr::prepend(array_values($parameters), $this);
 
         call_user_func_array($definition, $parameters);
     }
