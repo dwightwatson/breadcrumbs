@@ -76,13 +76,13 @@ class Generator
     }
 
     /**
-     * Call a parent route with the given parameters.
+     * Call a extends route with the given parameters.
      *
      * @param  string  $name
      * @param  mixed  $parameters
      * @return void
      */
-    public function parent(string $name, ...$parameters)
+    public function extends(string $name, ...$parameters)
     {
         $this->call($name, $parameters);
     }
@@ -94,7 +94,7 @@ class Generator
      * @param  string  $url
      * @return void
      */
-    public function add(string $title, string $url)
+    public function then(string $title, string $url)
     {
         $this->breadcrumbs->push(new Crumb($title, $url));
     }
@@ -111,8 +111,8 @@ class Generator
     {
         $definition = $this->registrar->get($name);
 
-        $parameters = Arr::prepend(array_values($parameters), $this);
+        $definition->bindTo($this);
 
-        call_user_func_array($definition, $parameters);
+        $definition(...$parameters);
     }
 }
