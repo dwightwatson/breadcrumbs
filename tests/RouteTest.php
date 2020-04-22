@@ -1,10 +1,9 @@
 <?php
 
-namespace Tests;
+namespace Watson\Breadcrumbs\Tests;
 
 use Mockery;
 use Watson\Breadcrumbs\Route;
-use PHPUnit\Framework\TestCase;
 use Illuminate\Routing\Route as BaseRoute;
 use Illuminate\Contracts\Routing\Registrar;
 
@@ -12,7 +11,7 @@ class RouteTest extends TestCase
 {
     protected $route;
 
-    function setUp()
+    function setUp(): void
     {
         $this->baseRoute = Mockery::mock(BaseRoute::class)->shouldDeferMissing();
 

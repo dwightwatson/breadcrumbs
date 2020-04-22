@@ -1,8 +1,7 @@
 <?php
 
-namespace Tests;
+namespace Watson\Breadcrumbs\Tests;
 
-use PHPUnit\Framework\TestCase;
 use Watson\Breadcrumbs\Breadcrumb;
 
 class BreadcrumbTest extends TestCase

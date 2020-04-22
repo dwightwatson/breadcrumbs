@@ -15,20 +15,6 @@ Require the package through Composer as per usual.
 $ composer require watson/breadcrumbs
 ```
 
-Then add the service provider and facade in `config/app.php` as you would normally.
-
-```php
-'providers' => [
-    Watson\Breadcrumbs\ServiceProvider::class
-];
-```
-
-```php
-'aliases' => [
-    'Breadcrumbs' => Watson\Breadcrumbs\Facade::class
-];
-```
-
 ## Usage
 
 Create a new file at `routes/breadcrumbs.php` to define your breadcrumbs. By default the package will work with named routes which works with resourceful routing. However, you're also free to define routes by the controller action/pair.

@@ -3,6 +3,7 @@
 namespace Watson\Breadcrumbs;
 
 use Illuminate\Contracts\Routing\Registrar;
+use Illuminate\Support\Arr;
 
 class Route
 {
@@ -51,7 +52,7 @@ class Route
             return null;
         }
 
-        $namespace = array_get($this->route->getAction(), 'namespace');
+        $namespace = Arr::get($this->route->getAction(), 'namespace');
 
         return str_replace($namespace . '\\', '', $name);
     }

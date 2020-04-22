@@ -1,17 +1,16 @@
 <?php
 
-namespace Tests;
+namespace Watson\Breadcrumbs\Tests;
 
 use Mockery;
 use Illuminate\View\View;
 use Illuminate\View\Factory;
-use PHPUnit\Framework\TestCase;
 use Watson\Breadcrumbs\Renderer;
 use Illuminate\Support\HtmlString;
 
 class RendererTest extends TestCase
 {
-    function setUp()
+    function setUp(): void
     {
         parent::setUp();
 

@@ -1,10 +1,9 @@
 <?php
 
-namespace Tests;
+namespace Watson\Breadcrumbs\Tests;
 
 use Mockery;
 use Watson\Breadcrumbs\Route;
-use PHPUnit\Framework\TestCase;
 use Watson\Breadcrumbs\Manager;
 use Watson\Breadcrumbs\Renderer;
 use Watson\Breadcrumbs\Generator;
@@ -13,7 +12,7 @@ class ManagerTest extends TestCase
 {
     protected $breadcrumbs;
 
-    function setUp()
+    function setUp(): void
     {
         parent::setUp();
 

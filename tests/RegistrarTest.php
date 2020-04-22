@@ -1,8 +1,7 @@
 <?php
 
-namespace Tests;
+namespace Watson\Breadcrumbs\Tests;
 
-use PHPUnit\Framework\TestCase;
 use Watson\Breadcrumbs\Registrar;
 use Watson\Breadcrumbs\Exceptions\DefinitionNotFoundException;
 use Watson\Breadcrumbs\Exceptions\DefinitionAlreadyExistsException;
@@ -11,7 +10,7 @@ class RegistrarTest extends TestCase
 {
     protected $registrar;
 
-    function setUp()
+    function setUp(): void
     {
         parent::setUp();
 
@@ -35,7 +34,7 @@ class RegistrarTest extends TestCase
     /** @test */
     function it_throws_when_definition_does_not_exist()
     {
-        $this->setExpectedException(DefinitionNotFoundException::class);
+        $this->expectException(DefinitionNotFoundException::class);
 
         $this->registrar->get('foo');
     }
@@ -61,7 +60,7 @@ class RegistrarTest extends TestCase
     /** @test */
     function it_throws_if_setting_existing_definition()
     {
-        $this->setExpectedException(DefinitionAlreadyExistsException::class);
+        $this->expectException(DefinitionAlreadyExistsException::class);
 
         $closure = function () {
             return 'hello';

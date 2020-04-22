@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Exceptions;
+namespace Watson\Breadcrumbs\Tests\Exceptions;
 
-use PHPUnit\Framework\TestCase;
 use Watson\Breadcrumbs\Exceptions\DefinitionNotFoundException;
+use Watson\Breadcrumbs\Tests\TestCase;
 
 class DefinitionNotFoundExceptionTest extends TestCase
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Exceptions;
+namespace Watson\Breadcrumbs\Tests\Exceptions;
 
-use PHPUnit\Framework\TestCase;
 use Watson\Breadcrumbs\Exceptions\DefinitionAlreadyExistsException;
+use Watson\Breadcrumbs\Tests\TestCase;
 
 class DefinitionAlreadyExistsExceptionTest extends TestCase
 {
