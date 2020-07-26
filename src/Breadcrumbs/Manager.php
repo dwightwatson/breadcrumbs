@@ -66,8 +66,6 @@ class Manager
      */
     public function render($parameters = null): ?Htmlable
     {
-        $parameters = Arr::wrap($parameters);
-
         if ($breadcrumbs = $this->generator->generate($parameters)) {
             return $this->view->make($this->config->get('breadcrumbs.view'), compact('breadcrumbs'));
         }
