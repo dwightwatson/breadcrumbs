@@ -44,6 +44,9 @@ class ManagerTest extends TestCase
     {
         $this->generator->shouldReceive('generate')
             ->once()
+            ->with(Mockery::on(function ($argument) {
+               return $argument === null;
+            }))
             ->andReturn(collect([1, 2, 3]));
 
         $this->config->shouldReceive('get')
