@@ -1,6 +1,8 @@
 Breadcrumbs for Laravel
 =======================
 
+## Warning: this package is currently incompatible with Laravel 7. I have started a rewrite that would support Laravel 7 but I have no ETA. You'll likely want to consider another breadcrumb package in the meantime.
+
 [![Build Status](https://travis-ci.org/dwightwatson/breadcrumbs.svg?branch=master)](https://travis-ci.org/dwightwatson/breadcrumbs)
 [![Total Downloads](https://poser.pugx.org/watson/breadcrumbs/downloads.svg)](https://packagist.org/packages/watson/breadcrumbs)
 [![License](https://poser.pugx.org/watson/breadcrumbs/license.svg)](https://packagist.org/packages/watson/breadcrumbs)
