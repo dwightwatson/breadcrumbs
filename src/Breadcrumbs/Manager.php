@@ -11,13 +11,17 @@ class Manager
 {
     /**
      * The breadcrumb generator.
+     *
+     * @var \Watson\Breadcrumbs\Generator
      */
-    protected Generator $generator;
+    protected $generator;
 
     /**
      * The breadcrumb renderer.
+     *
+     * @var \Watson\Breadcrumbs\Renderer
      */
-    protected Renderer $renderer;
+    protected $renderer;
 
     /**
      * Create the instance of the manager.

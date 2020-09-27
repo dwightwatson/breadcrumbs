@@ -11,11 +11,15 @@ class Renderer
 {
     /**
      * The view factory.
+     *
+     * @var \Illuminate\Contracts\View\Factory
      */
-    protected Factory $view;
+    protected $view;
 
     /**
      * The config repository.
+     *
+     * @var \Illuminate\Contracts\Config\Repository
      */
     protected Repository $config;
 
