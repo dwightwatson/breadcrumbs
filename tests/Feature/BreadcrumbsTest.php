@@ -7,6 +7,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Watson\Breadcrumbs\Facades\Breadcrumbs;
+use Watson\Breadcrumbs\Facades\Trail;
 
 class BreadcrumbsTest extends TestCase
 {
@@ -18,6 +19,20 @@ class BreadcrumbsTest extends TestCase
         $this->call('GET', '/');
 
         Breadcrumbs::for('home', fn () => $this->then('Home', '/'));
+
+        $breadcrumbs = Breadcrumbs::render();
+
+        $this->assertStringContainsString('Home', $breadcrumbs->render());
+    }
+
+    /** @test */
+    public function it_renders_breadcrumb_for_the_current_route_with_facade()
+    {
+        Route::get('/')->name('home');
+
+        $this->call('GET', '/');
+
+        Breadcrumbs::for('home', fn () => Trail::then('Home', '/'));
 
         $breadcrumbs = Breadcrumbs::render();
 

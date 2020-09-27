@@ -17,6 +17,7 @@ class ServiceProvider extends BaseServiceProvider implements DeferrableProvider
         $this->mergeConfigFrom(__DIR__.'/../config/breadcrumbs.php', 'breadcrumbs');
 
         $this->app->singleton('breadcrumbs.manager', Manager::class);
+        $this->app->singleton(Generator::class);
     }
 
     /**

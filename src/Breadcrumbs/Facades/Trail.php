@@ -3,6 +3,7 @@
 namespace Watson\Breadcrumbs\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use Watson\Breadcrumbs\Generator;
 
 class Trail extends Facade
 {
@@ -13,6 +14,6 @@ class Trail extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'breadcrumbs.generator';
+        return Generator::class;
     }
 }
