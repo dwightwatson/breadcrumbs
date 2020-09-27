@@ -18,7 +18,9 @@ class BreadcrumbsTest extends TestCase
 
         $this->call('GET', '/');
 
-        Breadcrumbs::for('home', fn () => $this->then('Home', '/'));
+        Breadcrumbs::for('home', function () {
+            $this->then('Home', '/');
+        });
 
         $breadcrumbs = Breadcrumbs::render();
 
@@ -32,7 +34,9 @@ class BreadcrumbsTest extends TestCase
 
         $this->call('GET', '/');
 
-        Breadcrumbs::for('home', fn () => Trail::then('Home', '/'));
+        Breadcrumbs::for('home', function () {
+            Trail::then('Home', '/');
+        });
 
         $breadcrumbs = Breadcrumbs::render();
 
@@ -46,7 +50,9 @@ class BreadcrumbsTest extends TestCase
 
         $this->call('GET', '/users/taylor');
 
-        Breadcrumbs::for('home', fn (string $user) => $this->then($user, '/'));
+        Breadcrumbs::for('home', function (string $user) {
+            $this->then($user, '/');
+        });
 
         $breadcrumbs = Breadcrumbs::render();
 
@@ -66,7 +72,9 @@ class BreadcrumbsTest extends TestCase
 
         $this->call('GET', '/users/1');
 
-        Breadcrumbs::for('home', fn (User $user) => $this->then($user, '/'));
+        Breadcrumbs::for('home', function (User $user) {
+            $this->then($user, '/');
+        });
 
         $breadcrumbs = Breadcrumbs::render();
 
@@ -80,7 +88,9 @@ class BreadcrumbsTest extends TestCase
 
         $this->call('GET', '/');
 
-        Breadcrumbs::for('home', fn () => $this->then('Home', '/'));
+        Breadcrumbs::for('home', function () {
+            $this->then('Home', '/');
+        });
 
         $breadcrumbs = Breadcrumbs::render();
 
