@@ -3,46 +3,31 @@
 namespace Watson\Breadcrumbs;
 
 use Closure;
-use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\Routing\Registrar as Router;
 use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Arr;
 
 class Manager
 {
     /**
-     * The view factory.
-     *
-     * @var \Illuminate\Contracts\View\Factory
-     */
-    protected $view;
-
-    /**
-     * The config repository.
-     *
-     * @var \Illuminate\Contracts\Config\Repository
-     */
-    protected $config;
-
-    /**
      * The breadcrumb generator.
-     *
-     * @var \Watson\Breadcrumbs\Generator
      */
-    protected $generator;
+    protected Generator $generator;
+
+    /**
+     * The breadcrumb renderer.
+     */
+    protected Renderer $renderer;
 
     /**
      * Create the instance of the manager.
      *
-     * @param  \Illuminate\Contracts\View\Factory  $view
-     * @param  \Illuminate\Contracts\Config\Repository  $config
-     * @param  \Watson\Breadcrumbs\Generator  $generator
      * @return void
      */
-    public function __construct(Factory $view, Repository $config, Generator $generator)
+    public function __construct(Router $router, Generator $generator, Renderer $renderer)
     {
-        $this->view = $view;
-        $this->config = $config;
+        $this->router = $router;
+        $this->renderer = $renderer;
         $this->generator = $generator;
     }
 
@@ -61,15 +46,18 @@ class Manager
     /**
      * Render the breadcrumbs as an HTML string
      *
-     * @param  array  $parameters
      * @return  \Illuminate\Contracts\Support\Htmlable
      */
-    public function render($parameters = null): ?Htmlable
+    public function render(): ?Htmlable
     {
-        $parameters = Arr::wrap($parameters);
+        $route = $this->router->current();
 
-        if ($breadcrumbs = $this->generator->generate($parameters)) {
-            return $this->view->make($this->config->get('breadcrumbs.view'), compact('breadcrumbs'));
+        if (is_null($route) || is_null($route->getName())) {
+            return $this->renderer->render(collect());
         }
+
+        $breadcrumbs = $this->generator->generate($route);
+
+        return $this->renderer->render($breadcrumbs);
     }
 }

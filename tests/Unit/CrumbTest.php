@@ -1,6 +1,6 @@
 <?php
 
-namespace Watson\Breadcrumbs\Tests;
+namespace Watson\Breadcrumbs\Tests\Unit;
 
 use Watson\Breadcrumbs\Crumb;
 

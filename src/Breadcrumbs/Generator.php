@@ -4,18 +4,12 @@ namespace Watson\Breadcrumbs;
 
 use Closure;
 use Illuminate\Contracts\Routing\Registrar as Router;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
 class Generator
 {
-    /**
-     * The router.
-     *
-     * @var \Illuminate\Contracts\Routing\Registrar
-     */
-    protected $router;
-
     /**
      * The breadcrumb registrar.
      *
@@ -33,13 +27,11 @@ class Generator
     /**
      * Create a new instance of the generator.
      *
-     * @param  \Watson\Breadcrumbs\Route  $route
      * @param  \Watson\Breadcrumbs\Registrar  $registrar
      * @return void
      */
-    public function __construct(Router $router, Registrar $registrar)
+    public function __construct(Registrar $registrar)
     {
-        $this->router = $router;
         $this->registrar = $registrar;
         $this->breadcrumbs = new Collection;
     }
@@ -62,11 +54,9 @@ class Generator
      *
      * @return \Illuminate\Support\Collection
      */
-    public function generate(array $parameters = null): Collection
+    public function generate(?Route $route): Collection
     {
-        $route = $this->router->current();
-
-        $parameters = isset($parameters) ? Arr::wrap($parameters) : $route->parameters;
+        $parameters = $route->parameters;
 
         if ($route && $this->registrar->has($route->getName())) {
             $this->call($route->getName(), $parameters);
@@ -77,14 +67,10 @@ class Generator
 
     /**
      * Call a extends route with the given parameters.
-     *
-     * @param  string  $name
-     * @param  mixed  $parameters
-     * @return void
      */
-    public function extends(string $name, ...$parameters)
+    public function extends(string $name, ...$parameters): self
     {
-        $this->call($name, $parameters);
+        return $this->call($name, $parameters);
     }
 
     /**
@@ -94,9 +80,11 @@ class Generator
      * @param  string  $url
      * @return void
      */
-    public function then(string $title, string $url)
+    public function then(string $title, string $url): self
     {
         $this->breadcrumbs->push(new Crumb($title, $url));
+
+        return $this;
     }
 
     /**
@@ -111,8 +99,8 @@ class Generator
     {
         $definition = $this->registrar->get($name);
 
-        $definition->bindTo($this);
+        $definition->call($this, ...array_values($parameters));
 
-        $definition(...$parameters);
+        return $this;
     }
 }
