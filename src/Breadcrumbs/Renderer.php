@@ -21,7 +21,7 @@ class Renderer
      *
      * @var \Illuminate\Contracts\Config\Repository
      */
-    protected Repository $config;
+    protected $config;
 
     /**
      * Create a new renderer instance.
