@@ -24,15 +24,18 @@ Breadcrumbs::for('home', function () {
 });
 
 Breadcrumbs::for('users.index', function () {
-    $this->extends('home')->then('Users', route('users.index'));
+    $this->extends('home')
+        ->then('Users', route('users.index'));
 });
 
 Breadcrumbs::for('users.show', function (User $user) {
-    $this->extends('users.index')->then($user->full_name, route('users.show', $user));
+    $this->extends('users.index')
+        ->then($user->full_name, route('users.show', $user));
 });
 
 Breadcrumbs::for('users.edit', function (User $user) {
-    $this->extends('users.show', $user)->then($user->full_name, route('users.show', $user));
+    $this->extends('users.show', $user)
+        ->then($user->full_name, route('users.show', $user));
 });
 ```
 
