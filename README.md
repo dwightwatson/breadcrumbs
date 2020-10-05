@@ -49,6 +49,12 @@ In your view file, you simply need to call the `render()` method wherever you wa
 {{ Breadcrumbs::render() }}
 ```
 
+Alternatively, you can specify the route name and pass in the arguments for a specific breadcrumb.
+
+```php
+{{ Breadcrumbs::render('users.show', [Auth::user()]) }}
+```
+
 ### Customising the breadcrumb view
 
 The package ships with a Bootstrap 3 compatible view which you can publish and customise as you need, or override completely with your own view. Simply run the following command to publish the view.
