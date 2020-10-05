@@ -28,6 +28,20 @@ class BreadcrumbsTest extends TestCase
     }
 
     /** @test */
+    public function it_renders_breadcrumb_for_the_given_route()
+    {
+        Route::get('/users/{user}')->name('users.show');
+
+        Breadcrumbs::for('users.show', function (string $user) {
+            $this->then($user, '/');
+        });
+
+        $breadcrumbs = Breadcrumbs::render('users.show', ['foo']);
+
+        $this->assertStringContainsString('foo', $breadcrumbs->render());
+    }
+
+    /** @test */
     public function it_renders_breadcrumb_for_the_current_route_with_facade()
     {
         Route::get('/')->name('home');
@@ -78,6 +92,28 @@ class BreadcrumbsTest extends TestCase
 
         $breadcrumbs = Breadcrumbs::render();
 
+        $this->assertStringContainsString('taylor', $breadcrumbs->render());
+    }
+
+    /** @test */
+    public function it_renders_nested_breadcrumbs()
+    {
+        Route::get('/')->name('home');
+        Route::get('/users/{user}')->name('users.show');
+
+        $this->call('GET', '/users/taylor');
+
+        Breadcrumbs::for('home', function () {
+            $this->then('Home', '/');
+        });
+
+        Breadcrumbs::for('users.show', function (string $user) {
+            $this->extends('home')->then($user, '/');
+        });
+
+        $breadcrumbs = Breadcrumbs::render();
+
+        $this->assertStringContainsString('Home', $breadcrumbs->render());
         $this->assertStringContainsString('taylor', $breadcrumbs->render());
     }
 

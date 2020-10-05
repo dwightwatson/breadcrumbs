@@ -52,7 +52,7 @@ class ManagerTest extends TestCase
 
         $this->generator->shouldReceive('generate')
             ->once()
-            ->with($route)
+            ->with('home', [])
             ->andReturn($breadcrumbs);
 
         $this->renderer->shouldReceive('render')

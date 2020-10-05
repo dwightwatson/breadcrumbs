@@ -4,7 +4,6 @@ namespace Watson\Breadcrumbs;
 
 use Closure;
 use Illuminate\Contracts\Routing\Registrar as Router;
-use Illuminate\Routing\Route;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
@@ -54,12 +53,10 @@ class Generator
      *
      * @return \Illuminate\Support\Collection
      */
-    public function generate(?Route $route): Collection
+    public function generate(string $name, ?array $parameters = []): Collection
     {
-        $parameters = $route->parameters;
-
-        if ($route && $this->registrar->has($route->getName())) {
-            $this->call($route->getName(), $parameters);
+        if ($this->registrar->has($name)) {
+            $this->call($name, $parameters);
         }
 
         return $this->breadcrumbs;

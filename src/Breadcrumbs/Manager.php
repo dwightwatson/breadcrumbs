@@ -52,15 +52,21 @@ class Manager
      *
      * @return  \Illuminate\Contracts\Support\Htmlable
      */
-    public function render(): ?Htmlable
+    public function render(?string $name = null, ?array $parameters = []): ?Htmlable
     {
         $route = $this->router->current();
 
-        if (is_null($route) || is_null($route->getName())) {
+        $name = $name ?: $route->getName();
+
+        if (is_null($name)) {
             return $this->renderer->render(collect());
         }
 
-        $breadcrumbs = $this->generator->generate($route);
+        $parameters = Arr::wrap(
+            $parameters ?: $route->parameters
+        );
+
+        $breadcrumbs = $this->generator->generate($name, $parameters);
 
         return $this->renderer->render($breadcrumbs);
     }
