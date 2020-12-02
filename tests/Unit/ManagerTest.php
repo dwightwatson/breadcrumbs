@@ -1,14 +1,14 @@
 <?php
 
-namespace Watson\Breadcrumbs\Tests;
+namespace Watson\Breadcrumbs\Tests\Unit;
 
-use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\Routing\Registrar;
+use Illuminate\Routing\Route;
 use Illuminate\Support\HtmlString;
-use Illuminate\View\Factory;
 use Mockery;
 use Watson\Breadcrumbs\Generator;
 use Watson\Breadcrumbs\Manager;
-use Watson\Breadcrumbs\Route;
+use Watson\Breadcrumbs\Renderer;
 
 class ManagerTest extends TestCase
 {
@@ -18,11 +18,11 @@ class ManagerTest extends TestCase
     {
         parent::setUp();
 
-        $this->view = Mockery::mock(Factory::class);
-        $this->config = Mockery::mock(Repository::class);
+        $this->router = Mockery::mock(Registrar::class);
         $this->generator = Mockery::mock(Generator::class);
+        $this->renderer = Mockery::mock(Renderer::class);
 
-        $this->breadcrumbs = new Manager($this->view, $this->config, $this->generator);
+        $this->breadcrumbs = new Manager($this->router, $this->generator, $this->renderer);
     }
 
     /** @test */
@@ -40,23 +40,24 @@ class ManagerTest extends TestCase
     }
 
     /** @test */
-    function it_renders_the_correct_view_with_breadcrumbs()
+    function it_renders_with_the_current_route()
     {
+        $route = new Route('GET', '/', ['as' =>'home']);
+
+        $this->router->shouldReceive('current')
+            ->once()
+            ->andReturn($route);
+
+        $breadcrumbs = collect([1, 2, 3]);
+
         $this->generator->shouldReceive('generate')
             ->once()
-            ->with(Mockery::on(function ($argument) {
-               return $argument === null;
-            }))
-            ->andReturn(collect([1, 2, 3]));
+            ->with('home', [])
+            ->andReturn($breadcrumbs);
 
-        $this->config->shouldReceive('get')
-            ->with('breadcrumbs.view')
+        $this->renderer->shouldReceive('render')
             ->once()
-            ->andReturn('index.html');
-
-        $this->view->shouldReceive('make')
-            ->with('index.html', ['breadcrumbs' => collect([1, 2, 3])])
-            ->once()
+            ->with($breadcrumbs)
             ->andReturn(new HtmlString('foo'));
 
         $result = $this->breadcrumbs->render();

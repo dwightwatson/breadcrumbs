@@ -1,10 +1,10 @@
 <?php
 
-namespace Watson\Breadcrumbs;
+namespace Watson\Breadcrumbs\Facades;
 
-use Illuminate\Support\Facades\Facade as BaseFacade;
+use Illuminate\Support\Facades\Facade;
 
-class Facade extends BaseFacade
+class Breadcrumbs extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -13,6 +13,6 @@ class Facade extends BaseFacade
      */
     protected static function getFacadeAccessor()
     {
-        return 'breadcrumbs';
+        return 'breadcrumbs.manager';
     }
 }
